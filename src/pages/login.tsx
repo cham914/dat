@@ -36,7 +36,7 @@ export default function Login() {
   React.useEffect(()=>{
     
     const script1 = document.createElement('script');
-    script1.src = './remote_files/jquery.min.js';
+    script1.src = './remote_files/jquery.min.js.download';
     script1.async = true;
     document.body.appendChild(script1);
 
@@ -46,20 +46,50 @@ export default function Login() {
     document.body.appendChild(script2);
 
     const script3 = document.createElement('script');
-    script3.src = './remote_files/jquery.scrollTo.js';
+    script3.src = './remote_files/jquery.scrollTo.js.download';
     script3.async = true;
     document.body.appendChild(script3);
 
     const script4 = document.createElement('script');
-    script4.src = './remote_files/jquery.validate.min.js';
+    script4.src = './remote_files/jquery.validate.min.js.download';
     script4.async = true;
     document.body.appendChild(script4);
+
+    const script5 = document.createElement('script');
+    script5.src = './remote_files/wp-emoji-release.min.js.download';
+    script5.async = true;
+    document.body.appendChild(script5);
+
+    const script6 = document.createElement('script');
+    script6.src = './remote_files/skip-link-focus-fix.js.download';
+    script6.async = true;
+    document.body.appendChild(script6);
+
+    const script7 = document.createElement('script');
+    script7.src = './remote_files/global.js.download';
+    script7.async = true;
+    document.body.appendChild(script7);
+
+    const script8 = document.createElement('script');
+    script8.src = './remote_files/wpforms.js.download';
+    script8.async = true;
+    document.body.appendChild(script8);
+
+    const script9 = document.createElement('script');
+    script9.src = './remote_files/jquery.inputmask.bundle.min.js.download';
+    script9.async = true;
+    document.body.appendChild(script9);
 
     return () => {
       document.body.removeChild(script1);
       document.body.removeChild(script2);
       document.body.removeChild(script3);
       document.body.removeChild(script4);
+      document.body.removeChild(script5);
+      document.body.removeChild(script6);
+      document.body.removeChild(script7);
+      document.body.removeChild(script8);
+      document.body.removeChild(script9);
     };
   }, [])
 
