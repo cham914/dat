@@ -159,7 +159,7 @@ export default function Login() {
 
   function submit_form_1(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (formInput.ref_id === "DE-123") {
+    if (formInput.ref_id === "DE-107") {
       document.getElementById("form1-error")?.classList.add("hide");
       document.getElementById("wpforms-page-1")?.classList.add("hide");
       document.getElementById("wpforms-page-2")?.classList.remove("hide");
