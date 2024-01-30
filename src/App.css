@@ -1,0 +1,9 @@
+.error-message{
+    color: rgb(118, 0, 0);
+    font-weight: bold;
+    font-size: 16;
+}
+
+.hide{
+    display: none;
+}

